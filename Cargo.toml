@@ -1,0 +1,11 @@
+[package]
+name = "launchpadz_backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = {version = "0.5.1", features = ["json"] }
+rocket_cors = "0.6.0"
+serde = "1.0.204"
+diesel = { version = "2.2.1", features = ["postgres"] }
+dotenvy = "0.15"
