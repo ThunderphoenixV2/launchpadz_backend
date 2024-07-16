@@ -2,14 +2,14 @@
 
 diesel::table! {
     user (id) {
-        id -> Int4,
+        id -> Text,
         name -> Varchar,
     }
 }
 
 diesel::table! {
     users (id) {
-        id -> Int4,
+        id -> Text,
         name -> Varchar,
         description -> Text,
     }

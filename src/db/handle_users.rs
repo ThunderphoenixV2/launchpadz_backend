@@ -23,7 +23,7 @@ pub fn establish_connection() -> PgConnection {
 // create user
 use crate::models::{ User, NewUser};
 use rocket::serde::json::{Value, json};
-pub fn create_user(id: &i32, name: &str, description: &str) -> Value {
+pub fn create_user(id: &str, name: &str, description: &str) -> Value {
     println!("trying to create user");  // debug
     use crate::schema::users;
 
@@ -37,11 +37,10 @@ pub fn create_user(id: &i32, name: &str, description: &str) -> Value {
         .expect("Error saving new user");
     println!("successfully created user");  // debug
     json!({ "status": "successfully created new user"})
-    // return confirmation instead of user (?)
 }
 
 // get user
-pub fn get_user(user_id: i32) -> User {
+pub fn get_user(user_id: &String) -> User {
     println!("trying to fetch user"); // debug
     use crate::schema::users::dsl::*;
 
@@ -56,18 +55,18 @@ pub fn get_user(user_id: i32) -> User {
     user_profile
 }
 
-/*
+
 // delete user
-pub fn delete_user(user_id: i32) {
+pub fn delete_user(user_id: &String) -> Value {
     use crate::schema::users::dsl::*;
 
     let connection = &mut establish_connection();
     let pattern = format!("%{user_id}%");
 
-    diesel::delete(users.filter(id.eq(pattern)))
+    diesel::delete(users.filter(id.like(pattern)))
         .execute(connection)
         .expect("Error deleting user");
-    // return confirmation
+    json!({ "status": "successfully deleted user"})
 }
-*/
+
 }

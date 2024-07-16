@@ -4,12 +4,12 @@ use rocket::serde::{
     Deserialize, Serialize,
 };
 use rocket::post;
-use crate::{create_user, get_user};
+use crate::{create_user, get_user, delete_user};
 
 // structs
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CreateUserData {
-    id: i32,
+    id: String,
     name: String,
     description: String,
 }
@@ -21,20 +21,20 @@ pub struct StatusData {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct GetUserData {
-    id: i32,
+    id: String,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct ReturnUserData {
-    id: i32,
+    id: String,
     name: String,
     description: String,
 }
 
-// get functions
+// get function
 #[post("/api/data/get", format = "json", data = "<data>")]
 pub async fn return_user_data(data: Json<GetUserData>) -> Json<ReturnUserData> {
-    let user = get_user(data.id);
+    let user = get_user(&data.id);
     println!("{user:#?}");
     Json(ReturnUserData {
         id: user.id,
@@ -43,11 +43,20 @@ pub async fn return_user_data(data: Json<GetUserData>) -> Json<ReturnUserData> {
     })
 }
 
-// post functions
+// post function
 #[post("/api/data/create", format = "json", data = "<data>")]
 pub async fn create_user_data(data: Json<CreateUserData>) -> Json<StatusData> {
     println!("{data:#?}"); // debug
     Json(StatusData {
         status: create_user(&data.id, &data.name, &data.description)
+    })
+}
+
+// delete function
+#[post("/api/data/delete", format = "json", data = "<data>")]
+pub async fn delete_user_data(data: Json<GetUserData>) -> Json<StatusData> {
+    println!("{data:#?}"); // debug
+    Json(StatusData {
+        status: delete_user(&data.id)
     })
 }
