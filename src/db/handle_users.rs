@@ -36,7 +36,7 @@ pub fn create_user(id: &str, name: &str, description: &str) -> Value {
         .get_result(connection)
         .expect("Error saving new user");
     println!("successfully created user");  // debug
-    json!({ "status": "successfully created new user"})
+    json!({ "status": "successfully created user"})
 }
 
 // get user
@@ -58,6 +58,7 @@ pub fn get_user(user_id: &String) -> User {
 
 // delete user
 pub fn delete_user(user_id: &String) -> Value {
+    println!("trying to delete user"); // debug
     use crate::schema::users::dsl::*;
 
     let connection = &mut establish_connection();
@@ -66,6 +67,7 @@ pub fn delete_user(user_id: &String) -> Value {
     diesel::delete(users.filter(id.like(pattern)))
         .execute(connection)
         .expect("Error deleting user");
+    println!("successfully deleted user"); // debug
     json!({ "status": "successfully deleted user"})
 }
 

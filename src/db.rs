@@ -35,7 +35,7 @@ pub struct ReturnUserData {
 #[post("/api/data/get", format = "json", data = "<data>")]
 pub async fn return_user_data(data: Json<GetUserData>) -> Json<ReturnUserData> {
     let user = get_user(&data.id);
-    println!("{user:#?}");
+    println!("{user:#?}"); // debug
     Json(ReturnUserData {
         id: user.id,
         name: user.name,

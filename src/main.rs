@@ -36,7 +36,7 @@ fn rocket() -> _ {
             port: 8000,
             ..rocket::Config::default()
         })
-        .mount("/", routes![return_user_data, create_user_data])
+        .mount("/", routes![return_user_data, create_user_data, delete_user_data])
         .register("/", catchers![not_found])
         .attach(cors)
 }
