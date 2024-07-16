@@ -36,8 +36,7 @@ fn rocket() -> _ {
             port: 8000,
             ..rocket::Config::default()
         })
-        .mount("/", routes![return_data, get_data])
+        .mount("/", routes![return_user_data, create_user_data])
         .register("/", catchers![not_found])
-        .manage(MessageList::new(vec![]))                                  //remove later, aswell as the mod import
         .attach(cors)
 }
